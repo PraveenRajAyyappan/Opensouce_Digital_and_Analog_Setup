@@ -1,0 +1,253 @@
+Open source EDA tools which are required in the OpenLANE flow,
+
+1. Logic Synthesis          -  Yosys (and ABC)
+2. Auto Place and route
+3. LVS                      -  Netgen
+4. DRC, GDS Streaming out   -  Magic, Klayout
+5. Static Timing Analysis   -  OpenSTA, OpenTimer
+6. Schematic Capture        -  XSchem
+7. Netlist Simulation       -  Ngspice
+
+
+The steps and process for complete OpenLANE setup with EDA tools has been provided by spiliting it into 4 sections!
+1. Installation of dependencies
+2. Installation of the required Tools
+3. Installation of Docker for running OpenLANE
+4. Moving the skywater130nm tech files to the respective tool's library
+
+
+---------------------------------------------------------------------- 1st step ----------------------------------------------------------------------------
+
+--Installation of dependencies,
+(Starting in the default directory /home/user or user@user-VirtualBox:~$) 
+Note: user specified in the above comment is the name of your system which you might have given at the installation process of Ubuntu OS.
+
+sudo apt-get install m4 tcsh csh libx11-dev tcl-dev tcllib swig \
+	tk-dev libcairo2-dev mesa-common-dev \
+	libglu1-mesa-dev libncurses-dev \
+	build-essential clang bison flex \
+	libreadline-dev gawk libffi-dev git \
+	graphviz xdot pkg-config python3 libboost-system-dev \
+	adms autoconf automake libtool libxpm-dev libxaw7-dev libssl-dev \
+	libboost-python-dev libboost-filesystem-dev zlib1g-dev  --assume-yes
+
+--PLEASE INSTALL THE LATEST VERSION OF CMAKE BY LOOKING TO THE OFFICIAL WEBSITE https://cmake.org/download/.
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+wget https://github.com/Kitware/CMake/releases/download/v3.21.0/cmake-3.21.0.tar.gz
+tar -xvzf cmake-3.21.0.tar.gz
+cd cmake-3.21.0/
+sudo ./bootstrap 
+sudo make -j$(nproc)
+sudo make install 
+cd
+
+
+---------------------------------------------------------------------- 2nd step ----------------------------------------------------------------------------
+
+
+--Installation of the required Tools, 
+
+Note:  #Ignore this Note 1. if you are following me completely 
+       1. All the tools installation is done in the default diectory(/home/user), so if you wish to install all the tools in a folder and 
+	  want to place that in desktop or anywhere then that would not be adviced if you aren't good with linux commands, but it is not 
+	  that difficult the process will be same but there will be some changes in the commands where we copy files or link paths!
+          
+
+       2. And if you want to find the path of the current directory use 'pwd'
+
+1. Yosys
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+
+git clone https://github.com/YosysHQ/yosys.git
+cd yosys/
+sudo make
+sudo make install
+cd
+
+2. Netgen
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+git clone https://github.com/RTimothyEdwards/netgen
+cd netgen/
+./configure
+sudo make 
+sudo make install
+cd
+
+3. Magic
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+git clone https://github.com/RTimothyEdwards/magic
+cd magic/
+./configure
+sudo make
+sudo make install
+cd
+
+4. Klayout
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+sudo apt install klayout
+
+
+5. OpenSTA and OpenTimer
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+git clone https://github.com/The-OpenROAD-Project/OpenSTA.git
+cd OpenSTA/
+mkdir build
+cd build/
+cmake ..
+sudo make
+cd../
+sudo ln -s $PWD/app/sta /usr/bin/sta
+cd
+
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+sudo apt-get update
+sudo apt-get install gcc-8 g++-8 --assume-yes
+cd /usr/bin
+sudo rm -rf g++
+sudo ln -s g++-8 /usr/bin/g++
+sudo rm -rf gcc
+sudo ln -s gcc-8 /usr/bin/gcc
+cd
+
+git clone https://github.com/OpenTimer/OpenTimer.git
+cd OpenTimer/
+mkdir build
+cd build
+cmake ../
+sudo make
+cd ../
+sudo ln -s $PWD/bin/ot-shell /usr/bin/OpenTimer
+cd
+
+6.XSchem
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+git clone https://github.com/StefanSchippers/xschem.git
+sudo apt-get update
+sudo apt-get install lib11-xcb-dev
+cd xschem/
+./configure
+sudo make
+sudo make install
+cd
+
+7.Ngspice
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+git clone git://git.code.sf.net/p/ngspice/ngspice
+cd ngspice/
+git checkout pre-master
+./autogen.sh --adms
+mkdir release
+cd release 
+../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp
+sudo make
+sudo make install
+cd
+
+
+8. Maybe you need this too!
+(Install Icarus iverilog)
+
+sudo apt-get install -y iverilog --assume-yes
+sudo apt install gtkwave --assume-yes
+
+
+
+--Installation of Docker for running OpenLANE
+(Note: The following steps are given in the offical docker website)
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo groupadd docker
+sudo usermod -aG docker $USER
+sudo systemctl enable docker
+exit("reboot the system")
+
+
+---------------------------------------------------------------------- 3rd step ----------------------------------------------------------------------------
+
+
+
+--Installation of OpenPDKs, SkywaterPDKs, and docker setup for OpenLANE
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+git clone https://github.com/The-OpenROAD-Project/OpenLane.git
+cd Openlane/
+make OpenLane
+#Default PDK_ROOT is $(pwd)/pdks. If you want to install the PDK at a differnt location, uncomment the next line.
+#export PDK_ROOT=<absolute path to where skywater-pdk and open_pdks will reside>
+make pdk  ("if you want full library, make full-pdk. Feel free to checkout the official OpenLane github for installation of specific library")
+make test 
+
+"So if this test run is successful your installation of OpenLane is successful! Feel free to look at the mag,GDS, and other files of this test run by going
+to OpenLane/pdks/designs/spm/runs/openlane_test/results/"
+
+And you may try this,
+cd
+klayout OpenLane/pdks/designs/spm/runs/openlane_test/results/magic/spm.gds
+
+Wow that's great isnt it? Now we need to link the 130nm tech files to the respective tools to work on them
+
+
+
+---------------------------------------------------------------------- 4th step ----------------------------------------------------------------------------
+
+--Moving the skywater130nm tech files to the respective tool's library
+
+1.Xschem
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd /usr/local/share/xschem
+sudo mkdir xschem_sky130
+cd
+sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/xschem/* /usr/local/share/xschem/xschem_sky130/
+cd
+
+2.Magic
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/magic/* /usr/local/lib/magic/sys/
+
+3.Klayout
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd /usr/lib/klayout
+sudo mkdir sky130
+sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/klayout/* /usr/lib/klayout/sky130/
+cd
+
+4.Netgen
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/netgen/* /usr/local/lib/netgen/tcl/
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+That's it youre done!
+
+
+
+
+
+
+
