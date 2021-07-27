@@ -1,1 +1,3 @@
 # GUIDE AND COMMANDS FOR OPEN SOURCE EDA TOOLS AND OPENLANE SETUP IN UBUNTU
+
+Please check the OpenLANE flow setup.txt file 
