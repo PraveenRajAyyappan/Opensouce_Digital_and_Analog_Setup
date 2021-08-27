@@ -192,7 +192,7 @@ exit("reboot the system")
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
 git clone https://github.com/The-OpenROAD-Project/OpenLane.git
-cd Openlane/
+cd OpenLane/
 make OpenLane
 #Default PDK_ROOT is $(pwd)/pdks. If you want to install the PDK at a differnt location, uncomment the next line.
 #export PDK_ROOT=<absolute path to where skywater-pdk and open_pdks will reside>
