@@ -193,7 +193,7 @@ exit("reboot the system")
 
 git clone https://github.com/The-OpenROAD-Project/OpenLane.git
 cd OpenLane/
-make OpenLane
+make openlane
 #Default PDK_ROOT is $(pwd)/pdks. If you want to install the PDK at a differnt location, uncomment the next line.
 #export PDK_ROOT=<absolute path to where skywater-pdk and open_pdks will reside>
 make pdk  ("if you want full library, make full-pdk. Feel free to checkout the official OpenLane github for installation of specific library")
