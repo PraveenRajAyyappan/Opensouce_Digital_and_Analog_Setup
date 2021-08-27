@@ -164,7 +164,7 @@ sudo apt install gtkwave --assume-yes
 (Note: The following steps are given in the offical docker website)
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
-sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get remove docker docker-engine docker.io containerd runc (use this command if you have older version of docker installed)
 sudo apt-get update
 sudo apt-get install \
     apt-transport-https \
