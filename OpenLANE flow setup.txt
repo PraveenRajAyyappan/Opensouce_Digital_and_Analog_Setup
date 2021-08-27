@@ -101,7 +101,7 @@ mkdir build
 cd build/
 cmake ..
 sudo make
-cd../
+cd ../
 sudo ln -s $PWD/app/sta /usr/bin/sta
 cd
 
