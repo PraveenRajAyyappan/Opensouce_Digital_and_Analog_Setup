@@ -140,7 +140,10 @@ cd .xschem/
 mkdir xschem_library
 cd xschem_library
 git clone https://github.com/StefanSchippers/xschem_sky130.git xschem_sky130
-
+cd
+cd OpenLane/pdks/skywater-pdk/libraries
+cp -a sky130_fd_pr sky130_fd_pr_ngspice
+cd
 
 
 7.Ngspice
