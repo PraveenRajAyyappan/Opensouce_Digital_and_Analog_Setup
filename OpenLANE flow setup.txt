@@ -136,6 +136,12 @@ cd xschem/
 sudo make
 sudo make install
 cd
+cd .xschem/
+mkdir xschem_library
+cd xschem_library
+git clone https://github.com/StefanSchippers/xschem_sky130.git xschem_sky130
+
+
 
 7.Ngspice
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
