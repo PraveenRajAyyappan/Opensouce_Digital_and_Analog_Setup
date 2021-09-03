@@ -22,7 +22,8 @@ The steps and process for complete OpenLANE setup with EDA tools has been provid
 (Starting in the default directory /home/user or user@user-VirtualBox:~$) 
 Note: user specified in the above comment is the name of your system which you might have given at the installation process of Ubuntu OS.
 
-sudo apt-get install m4 tcsh csh libx11-dev tcl-dev tcllib swig \
+sudo apt-get update
+sudo apt-get install m4 tcsh csh libx11-dev libx11-xcb-dev tcl-dev tcllib swig \
 	tk-dev libcairo2-dev mesa-common-dev \
 	libglu1-mesa-dev libncurses-dev \
 	build-essential clang bison flex \
@@ -129,8 +130,6 @@ cd
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
 git clone https://github.com/StefanSchippers/xschem.git
-sudo apt-get update
-sudo apt-get install lib11-xcb-dev
 cd xschem/
 ./configure
 sudo make
