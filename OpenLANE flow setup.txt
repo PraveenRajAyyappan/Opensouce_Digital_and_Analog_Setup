@@ -28,7 +28,7 @@ sudo apt-get install m4 tcsh csh libx11-dev libx11-xcb-dev tcl-dev tcllib swig \
 	libglu1-mesa-dev libncurses-dev \
 	build-essential clang bison flex \
 	libreadline-dev gawk libffi-dev git \
-	graphviz xdot pkg-config python3 libboost-system-dev \
+	graphviz xdot pkg-config python3 libboost-system-dev vim\
 	adms autoconf automake libtool libxpm-dev libxaw7-dev libssl-dev \
 	libboost-python-dev libboost-filesystem-dev zlib1g-dev  --assume-yes
 
@@ -145,16 +145,32 @@ cd .xschem/
 mkdir xschem_library
 cd xschem_library
 git clone https://github.com/StefanSchippers/xschem_sky130.git xschem_sky130
+cd xschem_sky130
+vim xschemrc
+
+--Now in the file make sure the last five lines are the same! (it is nothing but changing the path directories)
+## (spice patched) skywater-pdk install
+# set SKYWATER_MODELS ~OpenLane/pdks/skywater-pdk/libraries/sky130_fd_pr_ngspice/latest
+# set SKYWATER_STDCELLS ~OpenLane/pdks/skywater-pdk/libraries/sky130_fd_sc_hd/latest
+
+## opencircuitdesign pdks install
+set SKYWATER_MODELS ~OpenLane/pdks/sky130A/libs.tech/ngspice
+set SKYWATER_STDCELLS ~OpenLane/pdks/sky130A/libs.ref/sky130_fd_sc_hd/spice
+
+(Press i and start editing, for closing the file press Esc then :wq)
+
+--Now continue the commands below
 cd
 cd OpenLane/pdks/skywater-pdk/libraries
 cp -a sky130_fd_pr sky130_fd_pr_ngspice
+cd sky130_fd_pr_ngspice/latest
 patch -p2 < /home/user/.xschem/xschem_library/xschem_sky130/sky130_fd_pr.patch
 cd 
 cd .xschem/simulations/
-vi .spiceinit
+vim .spiceinit
 "press i"
 set ngbehavior=hs
-"press Esc and :wq"
+"press Esc then :wq"
 
 
 7.Ngspice
