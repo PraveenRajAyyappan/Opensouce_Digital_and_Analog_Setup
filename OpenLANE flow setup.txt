@@ -138,6 +138,9 @@ cd
 
 -- The next few steps given below are for linking SKYWATER CELLS with Xschem, so these steps should be followed after the completetion of 3rd step(openlane installation) in this flow, so continue the installation with Ngspice
 
+(To generate .xschem file, first we need to run xschem one time!)
+xschem
+exit
 cd .xschem/
 mkdir xschem_library
 cd xschem_library
