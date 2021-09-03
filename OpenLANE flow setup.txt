@@ -136,6 +136,9 @@ cd xschem/
 sudo make
 sudo make install
 cd
+
+-- The next few steps given below are for linking SKYWATER CELLS with Xschem, so these steps should be followed after the completetion of 3rd step(openlane installation) in this flow, so continue the installation with Ngspice
+
 cd .xschem/
 mkdir xschem_library
 cd xschem_library
@@ -143,7 +146,8 @@ git clone https://github.com/StefanSchippers/xschem_sky130.git xschem_sky130
 cd
 cd OpenLane/pdks/skywater-pdk/libraries
 cp -a sky130_fd_pr sky130_fd_pr_ngspice
-cd
+patch -p2 < /home/user/.xschem/xschem_library/xschem_sky130/sky130_fd_pr.patch
+
 
 
 7.Ngspice
