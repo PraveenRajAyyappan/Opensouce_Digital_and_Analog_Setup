@@ -223,21 +223,12 @@ Wow that's great isnt it? Now we need to link the 130nm tech files to the respec
 
 --Moving the skywater130nm tech files to the respective tool's library
 
-1.Xschem
-(Starting in the default directory /home/user or user@user-VirtualBox:~$)
-
-cd /usr/local/share/xschem
-sudo mkdir xschem_sky130
-cd
-sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/xschem/* /usr/local/share/xschem/xschem_sky130/
-cd
-
-2.Magic
+1.Magic
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
 sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/magic/* /usr/local/lib/magic/sys/
 
-3.Klayout
+2.Klayout
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
 cd /usr/lib/klayout
@@ -245,7 +236,7 @@ sudo mkdir sky130
 sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/klayout/* /usr/lib/klayout/sky130/
 cd
 
-4.Netgen
+3.Netgen
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
 sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/netgen/* /usr/local/lib/netgen/tcl/
