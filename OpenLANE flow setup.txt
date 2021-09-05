@@ -54,6 +54,13 @@ cd gaw3-20200922
 ./configure
 sudo make -j$(nproc)
 sudo make install
+cd
+gaw
+(--close gaw)
+cd .gaw/
+vim gawrc
+--check for the line up_listenPort = 0 and change the 0 to 2020, press i to start editing and press Esc, :wq to save and exit 
+cd
 
 ---------------------------------------------------------------------- 2nd step ----------------------------------------------------------------------------
 
