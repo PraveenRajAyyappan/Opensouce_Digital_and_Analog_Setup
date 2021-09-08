@@ -40,7 +40,7 @@ wget https://github.com/Kitware/CMake/releases/download/v3.21.2/cmake-3.21.2.tar
 tar -xvzf cmake-3.21.2.tar.gz
 cd cmake-3.21.2/
 sudo ./bootstrap 
-sudo make -j$(nproc)
+make -j$(nproc)
 sudo make install 
 cd
 
@@ -52,7 +52,7 @@ wget http://download.tuxfamily.org/gaw/download/gaw3-20200922.tar.gz
 tar -xvzf gaw3-20200922.tar.gz
 cd gaw3-20200922
 ./configure
-sudo make -j$(nproc)
+make -j$(nproc)
 sudo make install
 cd
 gaw
@@ -81,7 +81,7 @@ Note:  #Ignore this Note 1. if you are following me completely
 
 git clone https://github.com/YosysHQ/yosys.git
 cd yosys/
-sudo make
+make
 sudo make install
 cd
 
@@ -91,7 +91,7 @@ cd
 git clone https://github.com/RTimothyEdwards/netgen
 cd netgen/
 ./configure
-sudo make 
+make 
 sudo make install
 cd
 
@@ -101,7 +101,7 @@ cd
 git clone https://github.com/RTimothyEdwards/magic
 cd magic/
 ./configure
-sudo make
+make
 sudo make install
 cd
 
@@ -118,7 +118,7 @@ cd OpenSTA/
 mkdir build
 cd build/
 cmake ..
-sudo make
+make
 cd ../
 sudo ln -s $PWD/app/sta /usr/bin/sta
 cd
@@ -138,7 +138,7 @@ cd OpenTimer/
 mkdir build
 cd build
 cmake ../
-sudo make
+make
 cd ../
 sudo ln -s $PWD/bin/ot-shell /usr/bin/OpenTimer
 cd
@@ -149,7 +149,7 @@ cd
 git clone https://github.com/StefanSchippers/xschem.git
 cd xschem/
 ./configure
-sudo make
+make
 sudo make install
 cd
 
@@ -199,8 +199,8 @@ git checkout pre-master
 ./autogen.sh --adms
 mkdir release
 cd release 
-../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp
-sudo make
+../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-adms
+make
 sudo make install
 cd
 
@@ -291,10 +291,4 @@ sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/netgen/* /usr/local/lib/netgen/tcl/
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 That's it youre done!
-
-
-
-
-
-
 
