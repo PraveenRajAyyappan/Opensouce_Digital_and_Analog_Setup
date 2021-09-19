@@ -31,7 +31,7 @@ sudo apt-get install m4 tcsh csh libx11-dev libx11-xcb-dev tcl-dev tcllib swig v
 	libglu1-mesa-dev libncurses-dev \
 	build-essential clang bison flex \
 	libreadline-dev gawk libffi-dev git \
-	graphviz xdot pkg-config python3 libboost-system-dev vim\
+	graphviz xdot pkg-config python3 libboost-system-dev vim \
 	adms autoconf automake libtool libxpm-dev libxaw7-dev libssl-dev libgtk-3-dev \
 	libboost-python-dev libboost-filesystem-dev zlib1g-dev xterm graphicsmagick ghostscript --assume-yes
 
