@@ -223,6 +223,8 @@ make openlane
 make pdk  ("if you want full library, make full-pdk. Feel free to checkout the official OpenLane github for installation of specific library")
 cd pdks/skywater-pdk/
 git submodule update --init libraries/sky130_fd_pr/latest
+cd ..
+cd ..
 make test 
 
 "So if this test run is successful your installation of OpenLane is successful! Feel free to look at the mag,GDS, and other files of this test run by going
