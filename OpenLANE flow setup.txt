@@ -253,7 +253,16 @@ cd .xschem/
 mkdir xschem_library
 cd xschem_library
 git clone https://github.com/StefanSchippers/xschem_sky130.git xschem_sky130
-cd xschem_sky130
+cd
+
+--Now continue the commands below
+
+cd OpenLane/pdks/skywater-pdk/libraries
+cp -a sky130_fd_pr sky130_fd_pr_ngspice
+cd sky130_fd_pr_ngspice/latest
+patch -p2 < /home/user/.xschem/xschem_library/xschem_sky130/sky130_fd_pr.patch  (user here is your system name that is similar to ~/.xschem .....)
+cd 
+cd .xschem/xschem_library/xschem_sky130
 vim xschemrc
 
 --Now in the file make sure the last few lines are the same! (it is nothing but changing the path directories according to our system files)
@@ -266,19 +275,15 @@ vim xschemrc
 # set SKYWATER_MODELS /usr/local/share/pdk/sky130A/libs.tech/ngspice
 # set SKYWATER_STDCELLS /usr/local/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/spice
 
-# This will be my residing path, you should change it according to our insatallation paths
+# This will be my path to the models and stdcells (makesure you set the paths according to your installation), where models path is the patched one and stdcells 
+# is the default hd library path
+
 set SKYWATER_MODELS ~/OpenLane/pdks/skywater-pdk/libraries/sky130_fd_pr_ngspice/latest
 set SKYWATER_STDCELLS ~/OpenLane/pdks/skywater-pdk/libraries/sky130_fd_sc_hd/latest
 
-(Press i and start editing, for closing the file press Esc then :wq)
 
---Now continue the commands below
+(Press i and start editing, for closing the file press Esc then :wq)
 cd
-cd OpenLane/pdks/skywater-pdk/libraries
-cp -a sky130_fd_pr sky130_fd_pr_ngspice
-cd sky130_fd_pr_ngspice/latest
-patch -p2 < /home/user/.xschem/xschem_library/xschem_sky130/sky130_fd_pr.patch  (user here is your system name that is similar to ~/.xschem .....)
-cd 
 cd .xschem/simulations/
 vim .spiceinit
 "press i"
