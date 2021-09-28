@@ -224,11 +224,11 @@ cd ..
 make test 
 
 "So if this test run is successful your installation of OpenLane is successful! Feel free to look at the mag,GDS, and other files of this test run by going
-to OpenLane/pdks/designs/spm/runs/openlane_test/results/"
+to OpenLane/designs/spm/runs/openlane_test/results/"
 
 And you may try this,
 cd
-klayout OpenLane/pdks/designs/spm/runs/openlane_test/results/magic/spm.gds
+klayout OpenLane/designs/spm/runs/openlane_test/results/magic/spm.gds
 
 Wow that's great isnt it? Now we need to link the 130nm tech files to the respective tools to work on them
 
