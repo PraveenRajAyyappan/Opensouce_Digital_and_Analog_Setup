@@ -239,24 +239,27 @@ exit("reboot the system")
 
 git clone https://github.com/The-OpenROAD-Project/OpenLane.git
 cd OpenLane/
-make openlane
-#Default PDK_ROOT is $(pwd)/pdks. If you want to install the PDK at a differnt location, uncomment the next line.
-#export PDK_ROOT=<absolute path to where skywater-pdk and open_pdks will reside>
-make pdk  ("if you want full library, make full-pdk. Feel free to checkout the official OpenLane github for installation of specific library")
+make pull-openlane
+
+	#Default PDK_ROOT is $(pwd)/pdks. If you want to install the PDK at a differnt location, uncomment the next line.
+	#export PDK_ROOT=<absolute path to where skywater-pdk and open_pdks will reside>
+
+make pdk  ("if you want full library, make full-pdk. Feel free to checkout the official OpenLane github for installation of specific library ")
 cd pdks/skywater-pdk/
 git submodule update --init libraries/sky130_fd_pr/latest
 cd ..
 cd ..
 make test 
 
-"So if this test run is successful your installation of OpenLane is successful! Feel free to look at the mag,GDS, and other files of this test run by going
+"So if this test run is successful your installation of OpenLane is successful! Feel free to look at the mag, GDS, and other files of this test run by going
 to OpenLane/designs/spm/runs/openlane_test/results/"
 
 And you may try this,
 cd
 klayout OpenLane/designs/spm/runs/openlane_test/results/magic/spm.gds
 
-Wow that's great isnt it? Now we need to link the 130nm tech files to the respective tools to work on them
+
+Now we need to link the 130nm tech files to the respective tools to work on them
 
 
 
