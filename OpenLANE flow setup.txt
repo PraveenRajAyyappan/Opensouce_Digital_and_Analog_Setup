@@ -10,21 +10,19 @@ Analog Design tools
 3. DRC(VLSI Layout tool)    -  Magic, Klayout (also used for GDS Streaming)
 4. LVS                      -  Netgen
 
-XXXXX You dont need (Yosys) unless you are wishing to synthesis outside of the OpenLane Docker!xxxxxxx
 
-The steps and process for complete OpenLANE setup with EDA tools has been provided by spiliting it into 4 sections!
+The steps and process for setting up an Open source design Infrastructure for both Analog and Digital design has been provided by spiliting it into 3 sections!
 1. Installation of dependencies
 2. Installation of the required Tools
 3. Installation of Docker for running OpenLANE
-4. Moving the skywater130nm tech files to the respective tool's library
+
 
 
 ---------------------------------------------------------------------- 1st step ----------------------------------------------------------------------------
 
 --Installation of dependencies,
-(Starting in the default directory /home/user or user@user-VirtualBox:~$) 
-Note: user specified in the above comment is the name of your system which you might have given at the installation process of Ubuntu OS.
 
+cd
 sudo apt-get update
 sudo apt-get install m4 tcsh csh libx11-dev libx11-xcb-dev tcl-dev tcllib swig vim-gtk \
 	tk-dev libcairo2-dev mesa-common-dev \
@@ -37,11 +35,11 @@ sudo apt-get install m4 tcsh csh libx11-dev libx11-xcb-dev tcl-dev tcllib swig v
 
 --PLEASE INSTALL THE LATEST VERSION OF CMAKE BY LOOKING TO THE OFFICIAL WEBSITE https://cmake.org/download/ 
 --i.e change the versions below in the commands into the latest one available.
-(Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
-wget https://github.com/Kitware/CMake/releases/download/v3.21.2/cmake-3.21.2.tar.gz
-tar -xvzf cmake-3.21.2.tar.gz
-cd cmake-3.21.2/
+cd
+wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0.tar.gz
+tar -xvzf cmake-3.23.0.tar.gz
+cd cmake-3.23.0/
 sudo ./bootstrap 
 sudo make -j$(nproc)
 sudo make install 
@@ -49,11 +47,11 @@ cd
 
 --PLEASE INSTALL THE LATEST VERSION OF GAW BY LOOKING TO THE OFFICIAL WEBSITE http://download.tuxfamily.org/gaw/download
 --i.e change the versions below in the commands into the latest one available.
-(Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
-wget http://download.tuxfamily.org/gaw/download/gaw3-20200922.tar.gz
-tar -xvzf gaw3-20200922.tar.gz
-cd gaw3-20200922
+
+wget http://download.tuxfamily.org/gaw/download/gaw3-20220315.tar.gz
+tar -xvzf gaw3-20220315.tar.gz
+cd gaw3-20220315
 ./configure
 sudo make -j$(nproc)
 sudo make install
@@ -62,8 +60,12 @@ gaw
 (--close gaw)
 cd .gaw/
 vim gawrc
---check for the line up_listenPort = 0 and change the 0 to 2020, press i to start editing and press Esc, :wq to save and exit 
+--check for the line up_listenPort = 0 and change the 0 to 2020 (press i to start editing and press Esc, :wq to save and exit)
 cd
+
+
+-- If you want to know the reason why we open and close gaw, also change up_listenPort to 2020, give a read on the link mentioned below.
+https://github.com/bluecmd/learn-sky130/blob/main/schematic/xschem/getting-started.md#installation-of-gaw
 
 ---------------------------------------------------------------------- 2nd step ----------------------------------------------------------------------------
 
