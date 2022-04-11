@@ -50,7 +50,7 @@ sudo apt-get install m4 tcsh csh libx11-dev libx11-xcb-dev tcl-dev tcllib swig v
 
 2. CMAKE installation
 
--- CMAKE IS USED FOR INSTALLING APPLICATIONS
+-- CMAKE IS USED FOR INSTALLING TIMING ANALYSIS TOOLS
 --PLEASE INSTALL THE LATEST VERSION OF CMAKE BY LOOKING TO THE OFFICIAL WEBSITE https://cmake.org/download/ 
 --i.e change the versions below in the commands into the latest one available.
 
