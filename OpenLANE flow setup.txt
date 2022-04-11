@@ -1,14 +1,14 @@
 Open source EDA tools which are required in the OpenLANE flow,
 
-1. Logic Synthesis          -  Yosys (and ABC)
-2. Auto Place and route
-3. LVS                      -  Netgen
-4. DRC, GDS Streaming out   -  Magic, Klayout
-5. Static Timing Analysis   -  OpenSTA, OpenTimer
+Analog Design tools
+1. OpenLane                 - Automated flow which converts Verilog(.v) to GDS file
+2. Static Timing Analysis   -  OpenSTA, OpenTimer
 
 Analog Design tools
-6. Schematic Capture        -  XSchem
-7. Netlist Simulation       -  Ngspice
+1. Schematic Capture        -  XSchem  (similar tools, eSim, Xcircuit)
+2. Netlist Simulation       -  Ngspice
+3. DRC(VLSI Layout tool)    -  Magic, Klayout (also used for GDS Streaming)
+4. LVS                      -  Netgen
 
 XXXXX You dont need (Yosys) unless you are wishing to synthesis outside of the OpenLane Docker!xxxxxxx
 
