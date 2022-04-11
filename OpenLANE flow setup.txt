@@ -16,11 +16,25 @@ The steps and process for setting up an Open source design Infrastructure for bo
 2. Installation of the required Tools
 3. Installation of Docker for running OpenLANE
 
+Acknowledgements: This file is formed using a collection of many installation resources, so, I want to mention their names and links where I took it from.
+
+1. R. Timothy Edwards     - SVP Analog and Platform at Efabless, and maitains the open source tools website. (http://opencircuitdesign.com/index.html)
+2. OpenLane official      - (https://openlane-docs.readthedocs.io/en/rtd-develop/#installation-notes)
+3. Stefan Schippers       - Developer/Maintainer of Xschem.   (https://github.com/StefanSchippers)
+4. Kunal Ghosh            - Director and co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd. 
+                            (https://www.udemy.com/course/vsd-a-complete-guide-to-install-openlane-and-sky130nm-pdk/)
+5. From official websites - CMAKE, Gaw, Ngspice (Links to the website are given below at the installation of the respective file)
+
+
+Sorry if I have used your contents and haven't specified your name above, please give me a pull request!
+Also, if something is not documented well or some of the following steps are not working let me know your advices through a pull request.
 
 
 ---------------------------------------------------------------------- 1st step ----------------------------------------------------------------------------
 
 --Installation of dependencies,
+
+1. Libraries installation
 
 cd
 sudo apt-get update
@@ -33,6 +47,10 @@ sudo apt-get install m4 tcsh csh libx11-dev libx11-xcb-dev tcl-dev tcllib swig v
 	adms autoconf automake libtool libxpm-dev libxaw7-dev libssl-dev libgtk-3-dev \
 	libboost-python-dev libboost-filesystem-dev zlib1g-dev xterm graphicsmagick ghostscript --assume-yes
 
+
+2. CMAKE installation
+
+-- CMAKE IS USED FOR INSTALLING APPLICATIONS
 --PLEASE INSTALL THE LATEST VERSION OF CMAKE BY LOOKING TO THE OFFICIAL WEBSITE https://cmake.org/download/ 
 --i.e change the versions below in the commands into the latest one available.
 
@@ -41,19 +59,23 @@ wget https://github.com/Kitware/CMake/releases/download/v3.23.0/cmake-3.23.0.tar
 tar -xvzf cmake-3.23.0.tar.gz
 cd cmake-3.23.0/
 sudo ./bootstrap 
-sudo make -j$(nproc)
+make -j$(nproc)
 sudo make install 
 cd
 
+
+3. GAW installation
+
+--GAW IS USED TO DISPLAY THE OUTPUT CURVES FROM XSCHEM SIMULATION 
 --PLEASE INSTALL THE LATEST VERSION OF GAW BY LOOKING TO THE OFFICIAL WEBSITE http://download.tuxfamily.org/gaw/download
 --i.e change the versions below in the commands into the latest one available.
 
-
+cd
 wget http://download.tuxfamily.org/gaw/download/gaw3-20220315.tar.gz
 tar -xvzf gaw3-20220315.tar.gz
 cd gaw3-20220315
 ./configure
-sudo make -j$(nproc)
+make -j$(nproc)
 sudo make install
 cd
 gaw
@@ -64,7 +86,7 @@ vim gawrc
 cd
 
 
--- If you want to know the reason why we open and close gaw, also change up_listenPort to 2020, give a read on the link mentioned below.
+-- If you want to know the reason why we open and close gaw, also the change of up_listenPort to 2020, give a read on the link mentioned below.
 https://github.com/bluecmd/learn-sky130/blob/main/schematic/xschem/getting-started.md#installation-of-gaw
 
 ---------------------------------------------------------------------- 2nd step ----------------------------------------------------------------------------
@@ -72,37 +94,17 @@ https://github.com/bluecmd/learn-sky130/blob/main/schematic/xschem/getting-start
 
 --Installation of the required Tools, 
 
-Note:  #Ignore this Note 1. if you are following me completely 
-       1. All the tools installation is done in the default diectory(/home/user), so if you wish to install all the tools in a folder and 
-	  want to place that in desktop or anywhere then that would not be adviced if you aren't good with linux commands, but it is not 
-	  that difficult the process will be same but there will be some changes in the commands where we copy files or link paths!
-          
+Note:  
+       1. All the tools installation is done in the default diectory (/home/user), but if you wish to install all the tools in a specific folder then make sure
+          you specify the locations specified in the commands accordingly.
 
        2. And if you want to find the path of the current directory use 'pwd'
 
-1. Yosys
+
+1. Magic
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
-
-git clone https://github.com/YosysHQ/yosys.git
-cd yosys/
-sudo make
-sudo make install
 cd
-
-2. Netgen
-(Starting in the default directory /home/user or user@user-VirtualBox:~$)
-
-git clone https://github.com/RTimothyEdwards/netgen
-cd netgen/
-./configure
-sudo make 
-sudo make install
-cd
-
-3. Magic
-(Starting in the default directory /home/user or user@user-VirtualBox:~$)
-
 git clone https://github.com/RTimothyEdwards/magic
 cd magic/
 ./configure
@@ -110,14 +112,59 @@ sudo make
 sudo make install
 cd
 
-4. Klayout
+
+2. Klayout
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd
 sudo apt install klayout
 
 
-5. OpenSTA and OpenTimer
+
+3. Netgen
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
+cd
+git clone https://github.com/RTimothyEdwards/netgen
+cd netgen/
+./configure
+sudo make 
+sudo make install
+cd
+
+
+4.XSchem
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd
+git clone https://github.com/StefanSchippers/xschem.git
+cd xschem/
+./configure
+sudo make
+sudo make install
+cd
+
+
+5.Ngspice
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd
+git clone git://git.code.sf.net/p/ngspice/ngspice
+cd ngspice/
+git checkout pre-master
+./autogen.sh --adms
+mkdir release
+cd release 
+../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp
+sudo make
+sudo make install
+cd
+
+
+6. OpenSTA and OpenTimer
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd
 git clone https://github.com/The-OpenROAD-Project/OpenSTA.git
 cd OpenSTA/
 mkdir build
@@ -148,35 +195,11 @@ cd ../
 sudo ln -s $PWD/bin/ot-shell /usr/bin/OpenTimer
 cd
 
-6.XSchem
-(Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
-git clone https://github.com/StefanSchippers/xschem.git
-cd xschem/
-./configure
-sudo make
-sudo make install
-cd
-
-
-7.Ngspice
-(Starting in the default directory /home/user or user@user-VirtualBox:~$)
-
-git clone git://git.code.sf.net/p/ngspice/ngspice
-cd ngspice/
-git checkout pre-master
-./autogen.sh --adms
-mkdir release
-cd release 
-../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp
-sudo make
-sudo make install
-cd
-
-
-8. Maybe you need this too!
+7. Maybe you need this too!
 (Install Icarus iverilog)
 
+cd
 sudo apt-get install -y iverilog --assume-yes
 sudo apt install gtkwave --assume-yes
 
@@ -186,6 +209,7 @@ sudo apt install gtkwave --assume-yes
 (Note: The following steps are given in the offical docker website)
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
+cd
 sudo apt-get remove docker docker-engine docker.io containerd runc (use this command if you have older version of docker installed)
 sudo apt-get update
 sudo apt-get install \
