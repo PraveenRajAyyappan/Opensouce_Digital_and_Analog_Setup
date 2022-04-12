@@ -17,6 +17,9 @@ The steps and process for setting up an Open source design Infrastructure for An
 --Installation of dependencies,
 
 1. Libraries installation
+--The libraries shown below for installation might seem too much for the analog tools however, this may help you to not look at library installation again
+when installing new tools like gaw, text editor, xterm for ngspice and so on. So, it better to finish it in one shot than doing it again and again for 
+newer installation.
 
 cd
 sudo apt-get update
