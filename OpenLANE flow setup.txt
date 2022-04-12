@@ -16,19 +16,6 @@ The steps and process for setting up an Open source design Infrastructure for bo
 2. Installation of the required Tools
 3. Installation of Docker for running OpenLANE
 
-Acknowledgements: This file is formed using a collection of many installation resources, so, I want to mention their names and links where I took it from.
-
-1. R. Timothy Edwards     - SVP Analog and Platform at Efabless, and maitains the open source tools website. (http://opencircuitdesign.com/index.html)
-2. OpenLane official      - (https://openlane-docs.readthedocs.io/en/rtd-develop/#installation-notes)
-3. Stefan Schippers       - Developer/Maintainer of Xschem.   (https://github.com/StefanSchippers)
-4. Christian Svensson     - Software Reliability Engineer.    (https://github.com/bluecmd)
-4. Kunal Ghosh            - Director and co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd. 
-                            (https://www.udemy.com/course/vsd-a-complete-guide-to-install-openlane-and-sky130nm-pdk/)
-5. From official websites - CMAKE, Gaw, Ngspice (Links to the website are given below at the installation of the respective file)
-
-
-Sorry if I have used your contents and haven't specified your name above, please give me a pull request!
-Also, if something is not documented well or some of the following steps are not working let me know your advices through a pull request.
 
 
 ---------------------------------------------------------------------- 1st step ----------------------------------------------------------------------------
@@ -343,6 +330,18 @@ That's it youre done!
 
 
 
+Acknowledgements: This file is formed using a collection of many installation resources, so, I want to mention their names and links where I took it from.
 
+1. R. Timothy Edwards     - SVP Analog and Platform at Efabless, and maitains the open source tools website. (http://opencircuitdesign.com/index.html)
+2. OpenLane official      - (https://openlane-docs.readthedocs.io/en/rtd-develop/#installation-notes)
+3. Stefan Schippers       - Developer/Maintainer of Xschem.   (https://github.com/StefanSchippers)
+4. Christian Svensson     - Software Reliability Engineer.    (https://github.com/bluecmd)
+4. Kunal Ghosh            - Director and co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd. 
+                            (https://www.udemy.com/course/vsd-a-complete-guide-to-install-openlane-and-sky130nm-pdk/)
+5. From official websites - CMAKE, Gaw, Ngspice (Links to the website are given below at the installation of the respective file)
+
+
+Sorry if I have used your contents and haven't specified your name above, please give me a pull request!
+Also, if something is not documented well or some of the following steps are not working let me know your advices through a pull request.
 
 
