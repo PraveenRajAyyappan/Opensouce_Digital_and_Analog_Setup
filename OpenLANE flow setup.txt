@@ -21,6 +21,7 @@ Acknowledgements: This file is formed using a collection of many installation re
 1. R. Timothy Edwards     - SVP Analog and Platform at Efabless, and maitains the open source tools website. (http://opencircuitdesign.com/index.html)
 2. OpenLane official      - (https://openlane-docs.readthedocs.io/en/rtd-develop/#installation-notes)
 3. Stefan Schippers       - Developer/Maintainer of Xschem.   (https://github.com/StefanSchippers)
+4. Christian Svensson     - Software Reliability Engineer.    (https://github.com/bluecmd)
 4. Kunal Ghosh            - Director and co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd. 
                             (https://www.udemy.com/course/vsd-a-complete-guide-to-install-openlane-and-sky130nm-pdk/)
 5. From official websites - CMAKE, Gaw, Ngspice (Links to the website are given below at the installation of the respective file)
