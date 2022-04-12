@@ -163,72 +163,32 @@ cd
 cd
 cd pdks
 git clone https://github.com/RTimothyEdwards/open_pdks.git
-./configure --enable-sky130-pdk=[path to sky130 PDK]    (In my case, path to sky130 PDK = /home/prv/pdks/skywater-pdk)
+./configure --enable-sky130-pdk=[path to sky130 PDK] --with-sky130-variants=All|A|B    
 make
 sudo make install
+cd
+
+--In my case, path to sky130 PDK = /home/prv/pdks/skywater-pdk and I choose sky130A variant as I dont need reram models which is included in B variant.
+  So, the below command was the one I used in my case. 
+  
+./configure --enable-sky130-pdk=/home/prv/pdks/skywater-pdk/libraries --with-sky130-variants=A
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-Now we need to link the 130nm tech files to the respective tools to work on them
-
-
-
----------------------------------------------------------------------- 4th step ----------------------------------------------------------------------------
-
---Moving the skywater130nm tech files to the respective tool's library
+-------------------------------------------------------- Final steps to run the tools with sky130 files-----------------------------------------------------------
 
 1.Xschem
 
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
-(To generate .xschem file, first we need to run xschem one time!)
-xschem
-exit
-cd .xschem/
-mkdir xschem_library
-cd xschem_library
-git clone https://github.com/StefanSchippers/xschem_sky130.git xschem_sky130
-cd
-
---Now continue the commands below
-
-cd OpenLane/pdks/skywater-pdk/libraries
-cp -a sky130_fd_pr sky130_fd_pr_ngspice
-cd sky130_fd_pr_ngspice/latest
-patch -p2 < /home/user/.xschem/xschem_library/xschem_sky130/sky130_fd_pr.patch  (user here is your system name that is similar to ~/.xschem .....)
-cd 
-cd .xschem/xschem_library/xschem_sky130
-vim xschemrc
-
---Now in the file make sure the last few lines are the same! (it is nothing but changing the path directories according to our system files)
-
-## (spice patched) skywater-pdk install
-# set SKYWATER_MODELS ~/skywater-pdk/libraries/sky130_fd_pr_ngspice/latest
-# set SKYWATER_STDCELLS ~/skywater-pdk/libraries/sky130_fd_sc_hd/latest
-
-## opencircuitdesign pdks install. You need to change these to point to your open_pdks installation
-# set SKYWATER_MODELS /usr/local/share/pdk/sky130A/libs.tech/ngspice
-# set SKYWATER_STDCELLS /usr/local/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/spice
-
-# This will be my path to the models and stdcells (makesure you set the paths according to your installation), where models path is the patched one and stdcells 
-# is the default hd library path
-
-set SKYWATER_MODELS ~/OpenLane/pdks/skywater-pdk/libraries/sky130_fd_pr_ngspice/latest
-set SKYWATER_STDCELLS ~/OpenLane/pdks/skywater-pdk/libraries/sky130_fd_sc_hd/latest
+-- Setting the PDK_ROOT varaible
+gedit ~/.bashrc
+export PDK_ROOT="/pdk/path/to/sky130"    -- add this to the .bashrc file (for example, my PDK_ROOT = "/home/prv/pdks/open_pdks/sky130")
+source ~/.bashrc
 
 
-(Press i and start editing, for closing the file press Esc then :wq)
+-- Setting xschem for using ngspice
+
 cd
 cd .xschem/simulations/
 vim .spiceinit
@@ -236,19 +196,16 @@ vim .spiceinit
 set ngbehavior=hs
 "press Esc then :wq"
 
+(Press i and start editing, for closing the file press Esc then :wq)
+
+
 
 2.Magic
-(Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
-sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/magic/* /usr/local/lib/magic/sys/
+-- Run magic using the command
+magic -rcfile ~/pdks/open_pdks/sky130/sky130A/libs.tech/magic/sky130A.magicrc
 
-3.Klayout
-(Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
-cd /usr/lib/klayout
-sudo mkdir sky130
-sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/klayout/* /usr/lib/klayout/sky130/
-cd
 
 4.Netgen
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
