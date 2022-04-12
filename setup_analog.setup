@@ -138,7 +138,14 @@ cd
 --Installation of OpenPDKs, SkywaterPDK.
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
+
+1. Installing skywater-pdk libraries. 
+(There are many library submodules depending on the application and you can replace or add any submodule according to your
+ use. But mainly uses ones are followed below: I/O library, primitive devices, high density and high voltage)
+
 cd
+mkdir pdks
+cd pdks
 git clone https://github.com/google/skywater-pdk
 cd skywater-pdk
 git submodule init libraries/sky130_fd_io/latest
@@ -146,11 +153,19 @@ git submodule init libraries/sky130_fd_pr/latest
 git submodule init libraries/sky130_fd_sc_hd/latest
 git submodule init libraries/sky130_fd_sc_hvl/latest
 git submodule update
+make -j$(nproc) timing
+cd
 
 
 
+2. Installing open_pdks, and setting up the PDK envinorment. 
 
-
+cd
+cd pdks
+git clone https://github.com/RTimothyEdwards/open_pdks.git
+./configure --enable-sky130-pdk=[path to sky130 PDK]    (In my case, path to sky130 PDK = /home/prv/pdks/skywater-pdk)
+make
+sudo make install
 
 
 
@@ -259,6 +274,6 @@ Acknowledgements: This file is formed using a collection of many installation re
 5. From official websites - CMAKE, Gaw, Ngspice (Links to the website are given below at the installation of the respective file)
 
 
-Sorry if I have used your contents and haven't specified your name above, please give me a pull request!
+Sorry if I have used your content and haven't specified your name above, please give me a pull request!
 Also, if something is not documented well or some of the following steps are not working let me know your advices through a pull request.
 
