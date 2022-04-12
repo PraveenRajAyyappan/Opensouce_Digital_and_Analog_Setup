@@ -102,7 +102,7 @@ sudo make install
 cd
 
 
-4.XSchem
+4.Xschem
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
 cd
@@ -207,10 +207,13 @@ magic -rcfile ~/pdks/open_pdks/sky130/sky130A/libs.tech/magic/sky130A.magicrc
 
 
 
-4.Netgen
+3.Netgen
 (Starting in the default directory /home/user or user@user-VirtualBox:~$)
 
-sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/netgen/* /usr/local/lib/netgen/tcl/
+cd
+netgen
+file1.spice file2.spice ~/pdks/open_pdks/sky130/sky130A/libs.tech/netgen/sky130_setup.tcl
+
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
