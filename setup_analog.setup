@@ -1,1 +1,256 @@
+Analog Design tools
+1. Schematic Capture        -  XSchem  (similar tools, eSim, Xcircuit)
+2. Netlist Simulation       -  Ngspice
+3. DRC(VLSI Layout tool)    -  Magic, Klayout (also used for GDS Streaming)
+4. LVS                      -  Netgen
+
+
+The steps and process for setting up an Open source design Infrastructure for Analog and Digital design has been provided by spiliting it into 3 sections!
+1. Installation of dependencies
+2. Installation of the required Tools
+3. Installation of Docker for running OpenLANE
+
+
+
+---------------------------------------------------------------------- 1st step ----------------------------------------------------------------------------
+
+--Installation of dependencies,
+
+1. Libraries installation
+
+cd
+sudo apt-get update
+sudo apt-get install m4 tcsh csh libx11-dev libx11-xcb-dev tcl-dev tcllib swig vim-gtk \
+	tk-dev libcairo2-dev mesa-common-dev \
+	libglu1-mesa-dev libncurses-dev \
+	build-essential clang bison flex \
+	libreadline-dev gawk libffi-dev git \
+	graphviz xdot pkg-config python3 libboost-system-dev vim \
+	adms autoconf automake libtool libxpm-dev libxaw7-dev libssl-dev libgtk-3-dev \
+	libboost-python-dev libboost-filesystem-dev zlib1g-dev xterm graphicsmagick ghostscript --assume-yes
+
+
+2. GAW installation
+
+--GAW IS USED TO DISPLAY THE OUTPUT CURVES FROM XSCHEM SIMULATION 
+--PLEASE INSTALL THE LATEST VERSION OF GAW BY LOOKING TO THE OFFICIAL WEBSITE http://download.tuxfamily.org/gaw/download
+--i.e change the versions below in the commands into the latest one available.
+
+cd
+wget http://download.tuxfamily.org/gaw/download/gaw3-20220315.tar.gz
+tar -xvzf gaw3-20220315.tar.gz
+cd gaw3-20220315
+./configure
+make -j$(nproc)
+sudo make install
+cd
+gaw
+(--close gaw)
+cd .gaw/
+vim gawrc
+--check for the line up_listenPort = 0 and change the 0 to 2020 (press i to start editing and press Esc, :wq to save and exit)
+cd
+
+
+-- If you want to know the reason why we open and close gaw, also the change of up_listenPort to 2020, give a read on the link mentioned below.
+https://github.com/bluecmd/learn-sky130/blob/main/schematic/xschem/getting-started.md#installation-of-gaw
+
+---------------------------------------------------------------------- 2nd step ----------------------------------------------------------------------------
+
+
+--Installation of the required Tools, 
+
+Note:  
+       1. All the tools installation is done in the default diectory (/home/user), but if you wish to install all the tools in a specific folder then make sure
+          you specify the locations specified in the commands accordingly.
+
+       2. And if you want to find the path of the current directory use 'pwd'
+
+
+1. Magic
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd
+git clone https://github.com/RTimothyEdwards/magic
+cd magic/
+./configure
+sudo make
+sudo make install
+cd
+
+
+2. Klayout
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd
+sudo apt install klayout
+
+
+
+3. Netgen
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd
+git clone https://github.com/RTimothyEdwards/netgen
+cd netgen/
+./configure
+sudo make 
+sudo make install
+cd
+
+
+4.XSchem
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd
+git clone https://github.com/StefanSchippers/xschem.git
+cd xschem/
+./configure
+sudo make
+sudo make install
+cd
+
+
+5.Ngspice
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd
+git clone git://git.code.sf.net/p/ngspice/ngspice
+cd ngspice/
+git checkout pre-master
+./autogen.sh --adms
+mkdir release
+cd release 
+../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp
+sudo make
+sudo make install
+cd
+
+
+
+---------------------------------------------------------------------- 3rd step ----------------------------------------------------------------------------
+
+
+
+--Installation of OpenPDKs, SkywaterPDKs, and docker setup for OpenLANE
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+git clone https://github.com/The-OpenROAD-Project/OpenLane.git
+cd OpenLane/
+make pull-openlane
+
+	#Default PDK_ROOT is $(pwd)/pdks. If you want to install the PDK at a differnt location, uncomment the next line.
+	#export PDK_ROOT=<absolute path to where skywater-pdk and open_pdks will reside>
+
+make pdk  ("if you want full library, make full-pdk. Feel free to checkout the official OpenLane github for installation of specific library ")
+cd pdks/skywater-pdk/
+git submodule update --init libraries/sky130_fd_pr/latest
+cd ..
+cd ..
+make test 
+
+"So if this test run is successful your installation of OpenLane is successful! Feel free to look at the mag, GDS, and other files of this test run by going
+to OpenLane/designs/spm/runs/openlane_test/results/"
+
+And you may try this,
+cd
+klayout OpenLane/designs/spm/runs/openlane_test/results/magic/spm.gds
+
+
+Now we need to link the 130nm tech files to the respective tools to work on them
+
+
+
+---------------------------------------------------------------------- 4th step ----------------------------------------------------------------------------
+
+--Moving the skywater130nm tech files to the respective tool's library
+
+1.Xschem
+
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+(To generate .xschem file, first we need to run xschem one time!)
+xschem
+exit
+cd .xschem/
+mkdir xschem_library
+cd xschem_library
+git clone https://github.com/StefanSchippers/xschem_sky130.git xschem_sky130
+cd
+
+--Now continue the commands below
+
+cd OpenLane/pdks/skywater-pdk/libraries
+cp -a sky130_fd_pr sky130_fd_pr_ngspice
+cd sky130_fd_pr_ngspice/latest
+patch -p2 < /home/user/.xschem/xschem_library/xschem_sky130/sky130_fd_pr.patch  (user here is your system name that is similar to ~/.xschem .....)
+cd 
+cd .xschem/xschem_library/xschem_sky130
+vim xschemrc
+
+--Now in the file make sure the last few lines are the same! (it is nothing but changing the path directories according to our system files)
+
+## (spice patched) skywater-pdk install
+# set SKYWATER_MODELS ~/skywater-pdk/libraries/sky130_fd_pr_ngspice/latest
+# set SKYWATER_STDCELLS ~/skywater-pdk/libraries/sky130_fd_sc_hd/latest
+
+## opencircuitdesign pdks install. You need to change these to point to your open_pdks installation
+# set SKYWATER_MODELS /usr/local/share/pdk/sky130A/libs.tech/ngspice
+# set SKYWATER_STDCELLS /usr/local/share/pdk/sky130A/libs.ref/sky130_fd_sc_hd/spice
+
+# This will be my path to the models and stdcells (makesure you set the paths according to your installation), where models path is the patched one and stdcells 
+# is the default hd library path
+
+set SKYWATER_MODELS ~/OpenLane/pdks/skywater-pdk/libraries/sky130_fd_pr_ngspice/latest
+set SKYWATER_STDCELLS ~/OpenLane/pdks/skywater-pdk/libraries/sky130_fd_sc_hd/latest
+
+
+(Press i and start editing, for closing the file press Esc then :wq)
+cd
+cd .xschem/simulations/
+vim .spiceinit
+"press i"
+set ngbehavior=hs
+"press Esc then :wq"
+
+
+2.Magic
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/magic/* /usr/local/lib/magic/sys/
+
+3.Klayout
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+cd /usr/lib/klayout
+sudo mkdir sky130
+sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/klayout/* /usr/lib/klayout/sky130/
+cd
+
+4.Netgen
+(Starting in the default directory /home/user or user@user-VirtualBox:~$)
+
+sudo ln -s ~/OpenLane/pdks/sky130A/libs.tech/netgen/* /usr/local/lib/netgen/tcl/
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+That's it youre done!
+
+
+
+
+Acknowledgements: This file is formed using a collection of many installation resources, so, I want to mention their names and links where I took it from.
+
+1. R. Timothy Edwards     - SVP Analog and Platform at Efabless, and maitains the open source tools website. (http://opencircuitdesign.com/index.html)
+2. OpenLane official      - (https://openlane-docs.readthedocs.io/en/rtd-develop/#installation-notes)
+3. Stefan Schippers       - Developer/Maintainer of Xschem.   (https://github.com/StefanSchippers)
+4. Christian Svensson     - Software Reliability Engineer.    (https://github.com/bluecmd)
+4. Kunal Ghosh            - Director and co-founder of VLSI System Design (VSD) Corp. Pvt. Ltd. 
+                            (https://www.udemy.com/course/vsd-a-complete-guide-to-install-openlane-and-sky130nm-pdk/)
+5. From official websites - CMAKE, Gaw, Ngspice (Links to the website are given below at the installation of the respective file)
+
+
+Sorry if I have used your contents and haven't specified your name above, please give me a pull request!
+Also, if something is not documented well or some of the following steps are not working let me know your advices through a pull request.
 
