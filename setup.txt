@@ -11,11 +11,11 @@ Analog Design tools
 4. LVS                      -  Netgen
 
 
-The steps and process for setting up an Open source design Infrastructure for both Analog and Digital design has been provided by spiliting it into 3 sections!
+The steps and process for setting up an Open source design Infrastructure for both Analog and Digital design has been provided by spiliting it into 4 sections!
 1. Installation of dependencies
 2. Installation of the required Tools
 3. Installation of Docker for running OpenLANE
-
+4. Running tools with sky130 setup
 
 
 ---------------------------------------------------------------------- 1st step ----------------------------------------------------------------------------
