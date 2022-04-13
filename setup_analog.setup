@@ -8,7 +8,8 @@ Analog Design tools
 The steps and process for setting up an Open source design Infrastructure for Analog and Digital design has been provided by spiliting it into 3 sections!
 1. Installation of dependencies
 2. Installation of the required Tools
-3. Installation of Docker for running OpenLANE
+3. Installation of PDKs
+4. Instruction on opening tools with sky130nm setup
 
 
 
@@ -33,7 +34,7 @@ sudo apt-get install m4 tcsh csh libx11-dev libx11-xcb-dev tcl-dev tcllib swig v
 	libboost-python-dev libboost-filesystem-dev zlib1g-dev xterm graphicsmagick ghostscript --assume-yes
 
 
-2. GAW installation
+2. GAW installation  
 
 --GAW IS USED TO DISPLAY THE OUTPUT CURVES FROM XSCHEM SIMULATION 
 --PLEASE INSTALL THE LATEST VERSION OF GAW BY LOOKING TO THE OFFICIAL WEBSITE http://download.tuxfamily.org/gaw/download
@@ -187,7 +188,7 @@ export PDK_ROOT="/pdk/path/to/sky130"    -- add this to the .bashrc file (for ex
 source ~/.bashrc
 
 
--- Setting xschem for using ngspice
+-- Adding a compatiblity option hspice(hs) to make ngspice match devices accordingly with the geometrical dimensions in the models.
 
 cd
 cd .xschem/simulations/
