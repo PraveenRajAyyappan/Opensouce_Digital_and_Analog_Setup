@@ -1,3 +1,5 @@
+All the below instructions only apply to a Linux based OS environment.
+
 Analog Design tools
 1. Schematic Capture        -  XSchem  (similar tools, eSim, Xcircuit)
 2. Netlist Simulation       -  Ngspice
