@@ -234,10 +234,12 @@ make pull-openlane
 
 make pdk  ("if you want full library, make full-pdk. Feel free to checkout the official OpenLane github for installation of specific library ")
 cd pdks/skywater-pdk/
-git submodule update --init libraries/sky130_fd_io/latest
-git submodule update --init libraries/sky130_fd_pr/latest
-git submodule update --init libraries/sky130_fd_sc_hd/latest
-git submodule update --init libraries/sky130_fd_sc_hvl/latest
+git submodule init libraries/sky130_fd_io/latest
+git submodule init libraries/sky130_fd_pr/latest
+git submodule init libraries/sky130_fd_sc_hd/latest
+git submodule init libraries/sky130_fd_sc_hvl/latest
+git submodule update
+make -j$(nproc) timing
 cd ..
 cd ..
 make test 
